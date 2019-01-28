@@ -1,13 +1,20 @@
 <!DOCTYPE html>
-<html  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" type="text/css" media="all" href="/resources/css/main.css">
     <title>Title</title>
 </head>
 <body class="text">
-    <h2>
-        Message = <span th:text="${message} "> </span>
-    </h2>
+<h2>
+    Message = <span th:text="${message} "> </span>
+</h2>
+<span>
+    <a href="?lang=en">en</a>
+	<a href="?lang=ru">ru</a>
+</span>
+<h2>
+    <span th:text="#{message.hello}"></span>
+</h2>
 </body>
 </html>
