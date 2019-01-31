@@ -21,7 +21,7 @@ public class PersonDaoImpl implements PersonDao{
 
     public void addPerson(Person person) {
         Session session = this.sessionFactory.getCurrentSession();
-        session.persist(person);
+        session.save(person);
     }
 
 

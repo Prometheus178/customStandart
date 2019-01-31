@@ -18,6 +18,7 @@ import java.util.Locale;
 @Controller
 
 public class Hello {
+
     @Autowired
     private PersonService personService;
 
@@ -29,11 +30,10 @@ public class Hello {
     }
 
     @RequestMapping(value = "/person", method = RequestMethod.POST)
-    public ModelAndView addPerson(@RequestParam String name) throws Exception{
+    public ModelAndView addPerson(@RequestParam String name, Person person) throws Exception{
         ModelAndView modelAndView = new ModelAndView("index");
 
         try {
-            Person person = new Person();
             person.setName(name);
             personService.addPerson(person);
 
