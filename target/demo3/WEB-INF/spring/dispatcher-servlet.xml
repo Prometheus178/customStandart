@@ -3,12 +3,15 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
         http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
         http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+        http://www.springframework.org/schema/context/spring-context-4.2.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 
     <mvc:default-servlet-handler/>
     <mvc:annotation-driven/>
@@ -40,27 +43,6 @@
     </bean>
 
     <!--locales-->
-
-    <!--<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">-->
-        <!--<property name="basename" value="message"/>-->
-        <!--<property name="defaultEncoding" value="UTF-8"/>-->
-    <!--</bean>-->
-
-    <!--<mvc:interceptors>-->
-        <!--<mvc:interceptor>-->
-            <!--<mvc:mapping path="/*" />-->
-            <!--<ref bean="localeChangeInterceptor" />-->
-        <!--</mvc:interceptor>-->
-    <!--</mvc:interceptors>-->
-
-    <!--<bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">-->
-        <!--<property name="paramName" value="lang" />-->
-    <!--</bean>-->
-
-    <!--<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">-->
-        <!--<property name="defaultLocale" value="ru" />-->
-    <!--</bean>-->
-
     <!-- Application Message Bundle -->
     <bean id="messageSource"
           class="org.springframework.context.support.ResourceBundleMessageSource">
@@ -70,7 +52,7 @@
 
     <bean id="localeResolver"
           class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
-        <property name="defaultLocale" value="en" />
+        <property name="defaultLocale" value="ru" />
     </bean>
 
     <mvc:interceptors>
@@ -78,5 +60,52 @@
             <property name="paramName" value="lang" />
         </bean>
     </mvc:interceptors>
+
+     <!--Hibernate 4 SessionFactory Bean definition -->
+
+    <bean id="hibernate4AnnotatedSessionFactory"
+                class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="annotatedClasses">
+            <list>
+                <value>org.model.Person</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <prop key="hibernate.show_sql">true</prop>
+            </props>
+        </property>
+    </bean>
+
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </bean>
+
+    <bean id="personDAO" class="org.dao.PersonDaoImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </bean>
+    <bean id="personService" class="org.services.PersonServiceImpl">
+        <property name="personDAO" ref="personDAO"/>
+    </bean>
+
+
+
+    <!--mysql    -->
+
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+                destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url"
+                        value="jdbc:mysql://localhost:3306/demo3DB" />
+        <property name="username" value="root" />
+        <property name="password" value="root" />
+
+    </bean>
+
 </beans>
 

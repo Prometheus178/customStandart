@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" type="text/css" media="all" href="/resources/css/main.css">
     <title>Title</title>
 </head>
@@ -16,5 +16,16 @@
 <h2>
     <span th:text="#{message.hello}"></span>
 </h2>
+
+<th:block>
+    <label>add Person</label>
+    <form action="/person" method="post">
+        <div>
+            name <input type="text" name="name" id="name">
+        </div>
+        <input type="submit" value="Отправить"/> <input type="reset" value="Reset"/>
+    </form>
+</th:block>
+
 </body>
 </html>
