@@ -39,7 +39,7 @@ public class Hello {
 
             modelAndView.addObject("message", "Person added with name: " + person.getName());
         }catch (Exception ex){
-            modelAndView.addObject("message","Failed to add person: " + ex.getMessage());
+
         }
         return modelAndView;
     }
