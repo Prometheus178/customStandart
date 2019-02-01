@@ -30,7 +30,7 @@ public class Hello {
     }
 
     @RequestMapping(value = "/person", method = RequestMethod.POST)
-    public ModelAndView addPerson(@RequestParam String name, Person person) throws Exception{
+    public ModelAndView addPerson(@RequestParam(value = "name")  String name, Person person) throws Exception{
         ModelAndView modelAndView = new ModelAndView("index");
 
         try {

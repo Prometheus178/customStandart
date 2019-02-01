@@ -7,5 +7,15 @@
 </head>
 <body>
 there is something written
+
+<hr/>
+<form action="/third/${inputName}" method="post">
+    <div>
+        <input type="text" name="inputName" id="inputName">
+        <input type="submit" value="Send">
+    </div>
+</form>
+
+<a th:text="${message}"></a>
 </body>
 </html>
