@@ -33,4 +33,20 @@
 <div>
     <a href="second.html">secondPage</a>
 </div>
+
+<hr/>
+
+<div>
+    <label>State</label>
+        <div>
+            <select>
+                <option value="" selected disabled hidden>Please select a state</option>
+                <option th:each="state : ${T(org.model.States).getSortedValue()}"
+                        th:value="${state}"
+                        th:text="${state.getValue()}">
+                </option>
+            </select>
+        </div>
+    </div>
+</div>
 </html>
